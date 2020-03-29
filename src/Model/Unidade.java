@@ -19,23 +19,24 @@ public class Unidade {
 	public String getNomeResponsavel() {
 		return nomeResponsavel;
 	}
-	public void setNomeResponsavel(String nomeResponsavel) {
+	public Unidade setNomeResponsavel(String nomeResponsavel) {
 		this.nomeResponsavel = nomeResponsavel;
+		return this;
 	}
 	public String getCpf() {
 		return cpf;
 	}
-	public void setCpf(String cpf) {
+	public Unidade setCpf(String cpf) {
 		this.cpf = cpf;
+		return this;
 	}
 	public String getNumero() {
 		return numero;
 	}
-	public void setNumero(String numero) {
+	public Unidade setNumero(String numero) {
 		this.numero = numero;
-	}
-
-	
+		return this;
+	}	
 	
 	@Override
 	public int hashCode() {
@@ -78,6 +79,4 @@ public class Unidade {
 	public String toString() {
 		return "Unidade [nomeResponsavel=" + nomeResponsavel + ", cpf=" + cpf + ", numero=" + numero + "]";
 	}	
-	
-	
 }

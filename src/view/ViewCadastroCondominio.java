@@ -7,8 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.util.ArrayList;
-
-import javax.swing.Action;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -19,16 +17,17 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
+
 import Model.Condominio;
 import Model.Endereco;
 import Model.Estado;
 import Model.Unidade;
 import repository.CondominioRepository;
-import javax.swing.JTable;
 
 public class ViewCadastroCondominio extends JFrame {
 
@@ -210,15 +209,11 @@ public class ViewCadastroCondominio extends JFrame {
 							if(unidade.equals(comboUnidades.getSelectedItem())) {
 								System.out.println(unidade.getNumero());
 							}
-						}
-						
-						
+						}						
 					}
 				});
 			}
-		});
-		
-		
+		});	
 		
 		btnCadastroUnidade.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
@@ -635,26 +630,26 @@ public class ViewCadastroCondominio extends JFrame {
 	}
 	
 	public Condominio cadastroCondominio() {
-		Condominio cond = new Condominio();
-		Endereco end = new Endereco();
-		end.setLogradouro(txtRua.getText());
-		end.setNumero(txtNumero.getText());
-		end.setComplemento(txtComplemento.getText());
-		end.setBairro(txtBairro.getText());
-		end.setCidade(txtCidade.getText());
-		end.setCep(txtCep.getText());		
-		end.setEstado((Estado)comboUf.getModel().getSelectedItem());
-		cond.setNome(txtNome.getText());
-		cond.setCnpj(cnpj.getText());	
-		cond.setEndereco(end);
+		Condominio cond = new Condominio();		
+		Endereco end = new Endereco()
+		.setLogradouro(txtRua.getText())
+		.setNumero(txtNumero.getText())
+		.setComplemento(txtComplemento.getText())
+		.setBairro(txtBairro.getText())
+		.setCidade(txtCidade.getText())
+		.setCep(txtCep.getText())	
+		.setEstado((Estado)comboUf.getModel().getSelectedItem());
+		cond.setNome(txtNome.getText())
+		.setCnpj(cnpj.getText())	
+		.setEndereco(end);
 		return cond;
 	}
 	
 	public Unidade cadastroUnidade() {
-		Unidade unidade = new Unidade();
-		unidade.setNumero(txtnumeroUnidade.getText());
-		unidade.setCpf(txtCpfResponsavel.getText());
-		unidade.setNomeResponsavel(txtNomeResponsavel.getText());
+		Unidade unidade = new Unidade()
+		.setNumero(txtnumeroUnidade.getText())
+		.setCpf(txtCpfResponsavel.getText())
+		.setNomeResponsavel(txtNomeResponsavel.getText());
 		return unidade;
 	}
 	
@@ -662,8 +657,7 @@ public class ViewCadastroCondominio extends JFrame {
 		for (Condominio condominio : repository.getCondominios()) {
 			if(condominio.getNome().equals(object)) {
 				System.out.println(condominio);
-				return condominio;
-				
+				return condominio;				
 			}
 		}
 		return new Condominio();		

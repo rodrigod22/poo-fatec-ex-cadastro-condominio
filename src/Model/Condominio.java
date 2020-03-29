@@ -29,24 +29,27 @@ public class Condominio {
 		return nome;
 	}
 
-	public void setNome(String nome) {
+	public Condominio setNome(String nome) {
 		this.nome = nome;
+		return this;
 	}
 
 	public String getCnpj() {
 		return cnpj;
 	}
 
-	public void setCnpj(String cnpj) {
+	public Condominio setCnpj(String cnpj) {
 		this.cnpj = cnpj;
+		return this;
 	}
 
 	public Endereco getEndereco() {
 		return endereco;
 	}
 
-	public void setEndereco(Endereco endereco) {
+	public Condominio setEndereco(Endereco endereco) {
 		this.endereco = endereco;
+		return this;
 	}	
 	
 	public List<Unidade> getUnidade() {

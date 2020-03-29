@@ -17,4 +17,6 @@ public class CondominioRepository {
 	public List<Condominio> getCondominios() {
 		return condominios;
 	}
+	
+	
 }
