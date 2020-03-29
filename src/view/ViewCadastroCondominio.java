@@ -15,6 +15,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -138,8 +139,7 @@ public class ViewCadastroCondominio extends JFrame {
 		
 		txtCidade = new JTextField();
 		txtCidade.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		txtCidade.setColumns(10);
-		
+		txtCidade.setColumns(10);		
 		
 		JLabel lblCep = new JLabel("CEP");
 		lblCep.setFont(new Font("Tahoma", Font.PLAIN, 16));		
@@ -147,28 +147,30 @@ public class ViewCadastroCondominio extends JFrame {
 		txtCep.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		txtCep.setColumns(10);			
 	
-		comboUf.setModel(new DefaultComboBoxModel<Estado>(Estado.values()));	
-			
+		comboUf.setModel(new DefaultComboBoxModel<Estado>(Estado.values()));				
 		
 		/*ACOES BOTOES*/
 		JButton btnCadastrar = new JButton("cadastrar");
+		btnCadastrar.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnCadastrar.addActionListener(new ActionListener() {
 		
 			@Override
 			public void actionPerformed(ActionEvent e) {					
-				Condominio c = cadastroCondominio();				
-				repository.addCondominio(c);					
-				comboCondominios.removeAllItems();
-				comboCondominiosBusca.removeAllItems();
-				for (Condominio cond : repository.getCondominios()) {			
-					comboCondominios.addItem(cond.getNome());	
-					comboCondominiosBusca.addItem(cond.getNome());
-			    }
-				//System.out.println(repository.getCondominios());
+				Condominio c = cadastroCondominio();		
+				if(c != null) {
+					repository.addCondominio(c);					
+					comboCondominios.removeAllItems();
+					comboCondominiosBusca.removeAllItems();
+					for (Condominio cond : repository.getCondominios()) {			
+						comboCondominios.addItem(cond.getNome());	
+						comboCondominiosBusca.addItem(cond.getNome());
+				    }
+				}			
 			}
 		});		
 	
 		JButton btnCadastroUnidade = new JButton("cadastrar");
+		btnCadastroUnidade.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnCadastroUnidade.addActionListener(new ActionListener() {
 			
 			@Override
@@ -215,7 +217,15 @@ public class ViewCadastroCondominio extends JFrame {
 			}
 		});	
 		
-		btnCadastroUnidade.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		JButton btnLimpaCondominio = new JButton("limpar");
+		btnLimpaCondominio.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		btnLimpaCondominio.addActionListener(new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+			    limpaCamposCondominio();				
+			}
+		});		
 		
 		GroupLayout gl_cadCond = new GroupLayout(cadCond);
 		gl_cadCond.setHorizontalGroup(
@@ -228,12 +238,14 @@ public class ViewCadastroCondominio extends JFrame {
 							.addContainerGap())
 						.addGroup(gl_cadCond.createSequentialGroup()
 							.addGroup(gl_cadCond.createParallelGroup(Alignment.TRAILING)
-								.addGroup(gl_cadCond.createParallelGroup(Alignment.TRAILING, false)
-									.addComponent(txtRua, Alignment.LEADING)
-									.addComponent(lblCadastroCondominio, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 234, GroupLayout.PREFERRED_SIZE)
-									.addComponent(lblNome, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
-									.addComponent(txtNome, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
-									.addComponent(btnCadastrar, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE))
+								.addComponent(txtRua, Alignment.LEADING, 409, 409, 409)
+								.addComponent(lblCadastroCondominio, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 234, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblNome, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
+								.addComponent(txtNome, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
+								.addGroup(Alignment.LEADING, gl_cadCond.createSequentialGroup()
+									.addComponent(btnCadastrar, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)
+									.addGap(29)
+									.addComponent(btnLimpaCondominio))
 								.addGroup(gl_cadCond.createSequentialGroup()
 									.addComponent(lblBairro)
 									.addPreferredGap(ComponentPlacement.RELATED, 175, Short.MAX_VALUE)
@@ -242,7 +254,7 @@ public class ViewCadastroCondominio extends JFrame {
 										.addGroup(gl_cadCond.createSequentialGroup()
 											.addComponent(lblNewLabel)
 											.addGap(144)))))
-							.addPreferredGap(ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+							.addGap(24)
 							.addGroup(gl_cadCond.createParallelGroup(Alignment.TRAILING)
 								.addGroup(gl_cadCond.createSequentialGroup()
 									.addComponent(lblCnpj, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
@@ -303,7 +315,9 @@ public class ViewCadastroCondominio extends JFrame {
 						.addComponent(txtCep, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(comboUf, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(78)
-					.addComponent(btnCadastrar)
+					.addGroup(gl_cadCond.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnCadastrar)
+						.addComponent(btnLimpaCondominio))
 					.addContainerGap(163, Short.MAX_VALUE))
 		);
 		cnpj.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -390,12 +404,8 @@ public class ViewCadastroCondominio extends JFrame {
 		JLabel lblBuscaCondominio = new JLabel("BUSCA CONDOMINIO");
 		lblBuscaCondominio.setFont(new Font("Tahoma", Font.BOLD, 18));
 		
-		JPanel panel = new JPanel();
 		
-		
-		
-		
-		
+		JPanel panel = new JPanel();		
 		GroupLayout gl_cadBusca = new GroupLayout(cadBusca);
 		gl_cadBusca.setHorizontalGroup(
 			gl_cadBusca.createParallelGroup(Alignment.LEADING)
@@ -496,9 +506,7 @@ public class ViewCadastroCondominio extends JFrame {
 		
 		cpfBusca = new JTextField();
 		cpfBusca.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		cpfBusca.setColumns(10);
-		
-		
+		cpfBusca.setColumns(10);		
 		
 		table = new JTable();
 		GroupLayout gl_panel = new GroupLayout(panel);
@@ -630,19 +638,51 @@ public class ViewCadastroCondominio extends JFrame {
 	}
 	
 	public Condominio cadastroCondominio() {
-		Condominio cond = new Condominio();		
-		Endereco end = new Endereco()
-		.setLogradouro(txtRua.getText())
-		.setNumero(txtNumero.getText())
-		.setComplemento(txtComplemento.getText())
-		.setBairro(txtBairro.getText())
-		.setCidade(txtCidade.getText())
-		.setCep(txtCep.getText())	
-		.setEstado((Estado)comboUf.getModel().getSelectedItem());
-		cond.setNome(txtNome.getText())
-		.setCnpj(cnpj.getText())	
-		.setEndereco(end);
-		return cond;
+		cnpj.setFocusLostBehavior(NORMAL);
+		txtCep.setFocusLostBehavior(NORMAL);
+		if(validaCondominio()) {
+			Condominio cond = new Condominio();		
+			Endereco end = new Endereco()
+			.setLogradouro(txtRua.getText())
+			.setNumero(txtNumero.getText())
+			.setComplemento(txtComplemento.getText())
+			.setBairro(txtBairro.getText())
+			.setCidade(txtCidade.getText())
+			.setCep(txtCep.getText())	
+			.setEstado((Estado)comboUf.getModel().getSelectedItem());
+			cond.setNome(txtNome.getText())
+			.setCnpj(cnpj.getText())	
+			.setEndereco(end);
+			limpaCamposCondominio();
+			return cond;
+		}
+		return null;	
+	}
+	
+	public void limpaCamposCondominio() {
+		txtNome.setText("");
+		cnpj.setText("");
+		txtRua.setText("");
+		txtNumero.setText("");
+		txtComplemento.setText("");
+		txtBairro.setText("");
+		txtCidade.setText("");
+		txtCep.setText("");		
+	}
+	
+	public boolean validaCondominio() {		
+		if(txtNome.getText().equals("") || txtRua.getText().equals("") || txtNumero.getText().equals("") || txtBairro.getText().equals("") ||
+				txtCidade.getText().equals("")) {			
+			JOptionPane.showMessageDialog(null, "Preencha todos os campos", "Erro", 0);			
+			return false;
+		}else if(cnpj.getText().trim().length() < 18) {			
+			JOptionPane.showMessageDialog(null, "CNPJ Incompleto", "Erro", 0);
+			return false;
+		}else if(txtCep.getText().trim().length() < 9) {
+			JOptionPane.showMessageDialog(null, "CEP Incompleto", "Erro", 0);
+			return false;
+		}
+		return true;
 	}
 	
 	public Unidade cadastroUnidade() {
@@ -661,7 +701,5 @@ public class ViewCadastroCondominio extends JFrame {
 			}
 		}
 		return new Condominio();		
-	}
-	
-	
+	}	
 }
