@@ -48,18 +48,18 @@ public class ViewCadastroCondominio extends JFrame {
 	private JComboBox<String> comboCondominiosBusca = new JComboBox();
 	private JComboBox<String> comboUnidades = new JComboBox();
 	private CondominioRepository repository = new CondominioRepository();
-	private JTextField txtnumeroUnidade;
+	private JTextField txtNumeroUnidade;
 	private JTextField txtNomeResponsavel;
 	private JFormattedTextField txtCpfResponsavel = new JFormattedTextField(new MaskFormatter("###.###.###-##"));
 	private ArrayList<Condominio> lista = (ArrayList<Condominio>) repository.getCondominios();
 	private JTextField nomeBusca;
 	private JTextField cnpjBusca;
 	private JTextField ruaBusca;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
+	private JTextField txtNumeroBusca;
+	private JTextField txtComplementoBusca;
+	private JTextField txtBairroBusca;
+	private JTextField txtCidadeBusca;
+	private JTextField txtCepBusca;
 	private JTextField NomeRespBusca;
 	private JTextField cpfBusca;
 	private JTable table;
@@ -199,16 +199,21 @@ public class ViewCadastroCondominio extends JFrame {
 				}
 				
 				nomeBusca.setText(condBusca.getNome());
-				
+				cnpjBusca.setText(condBusca.getCnpj());
+				ruaBusca.setText(condBusca.getEndereco().getLogradouro());
+				txtNumeroBusca.setText(condBusca.getEndereco().getNumero());
+				txtComplementoBusca.setText(condBusca.getEndereco().getComplemento());
+				txtBairroBusca.setText(condBusca.getEndereco().getBairro());
+				txtCidadeBusca.setText(condBusca.getEndereco().getCidade());
+				txtCepBusca.setText(condBusca.getEndereco().getCep());
 				comboUnidades.addActionListener(new ActionListener() {
 					
 					@Override
-					public void actionPerformed(ActionEvent e) {
-						
-						
-						for (Unidade unidade : condBusca.getUnidade()) {
-							
-							if(unidade.equals(comboUnidades.getSelectedItem())) {
+					public void actionPerformed(ActionEvent e) {						
+						for (Unidade unidade : condBusca.getUnidade()) {								
+							if(unidade.getNumero().equals(comboUnidades.getSelectedItem())) {
+								NomeRespBusca.setText(unidade.getNomeResponsavel());
+								cpfBusca.setText(unidade.getCpf());
 								System.out.println(unidade.getNumero());
 							}
 						}						
@@ -335,9 +340,9 @@ public class ViewCadastroCondominio extends JFrame {
 		JLabel lblNumero_1 = new JLabel("Numero");
 		lblNumero_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		
-		txtnumeroUnidade = new JTextField();
-		txtnumeroUnidade.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		txtnumeroUnidade.setColumns(10);
+		txtNumeroUnidade = new JTextField();
+		txtNumeroUnidade.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtNumeroUnidade.setColumns(10);
 		
 		JLabel lblNewLabel_3 = new JLabel("Nome responsavel");
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -362,7 +367,7 @@ public class ViewCadastroCondominio extends JFrame {
 						.addGroup(gl_cadUnid.createParallelGroup(Alignment.LEADING, false)
 							.addComponent(lblCpfl)
 							.addComponent(lblNewLabel_3)
-							.addComponent(txtnumeroUnidade, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(txtNumeroUnidade, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addComponent(lblNumero_1)
 							.addComponent(comboCondominios, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addComponent(lblNewLabel_2)
@@ -383,7 +388,7 @@ public class ViewCadastroCondominio extends JFrame {
 					.addGap(18)
 					.addComponent(lblNumero_1)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(txtnumeroUnidade, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addComponent(txtNumeroUnidade, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
 					.addComponent(lblNewLabel_3)
 					.addPreferredGap(ComponentPlacement.RELATED)
@@ -456,30 +461,30 @@ public class ViewCadastroCondominio extends JFrame {
 		JLabel lblNumero_2 = new JLabel("Numero");
 		lblNumero_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		
-		textField = new JTextField();
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		textField.setColumns(10);
+		txtNumeroBusca = new JTextField();
+		txtNumeroBusca.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtNumeroBusca.setColumns(10);
 		
 		JLabel lblNewLcomplementoabel = new JLabel("Complemento");
 		lblNewLcomplementoabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		
-		textField_1 = new JTextField();
-		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		textField_1.setColumns(10);
+		txtComplementoBusca = new JTextField();
+		txtComplementoBusca.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtComplementoBusca.setColumns(10);
 		
 		JLabel lblBairro_1 = new JLabel("Bairro");
 		lblBairro_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		
-		textField_2 = new JTextField();
-		textField_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		textField_2.setColumns(10);
+		txtBairroBusca = new JTextField();
+		txtBairroBusca.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtBairroBusca.setColumns(10);
 		
 		JLabel lblLabel = new JLabel("Cidade");
 		lblLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		
-		textField_3 = new JTextField();
-		textField_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		textField_3.setColumns(10);
+		txtCidadeBusca = new JTextField();
+		txtCidadeBusca.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtCidadeBusca.setColumns(10);
 		
 		JLabel lblUf = new JLabel("UF");
 		lblUf.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -487,9 +492,9 @@ public class ViewCadastroCondominio extends JFrame {
 		JLabel lblCep_1 = new JLabel("CEP");
 		lblCep_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		
-		textField_4 = new JTextField();
-		textField_4.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		textField_4.setColumns(10);
+		txtCepBusca = new JTextField();
+		txtCepBusca.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtCepBusca.setColumns(10);
 		
 		JLabel lblUnidades = new JLabel("Unidades");
 		lblUnidades.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -517,33 +522,32 @@ public class ViewCadastroCondominio extends JFrame {
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel.createSequentialGroup()
 							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-									.addGroup(gl_panel.createSequentialGroup()
-										.addComponent(lblNome_1, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-										.addGap(359))
-									.addGroup(gl_panel.createSequentialGroup()
-										.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-											.addGroup(gl_panel.createSequentialGroup()
-												.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-													.addComponent(lblNomeResponsavel)
-													.addComponent(NomeRespBusca, GroupLayout.PREFERRED_SIZE, 374, GroupLayout.PREFERRED_SIZE))
-												.addGap(8))
-											.addComponent(ruaBusca, GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)
-											.addComponent(nomeBusca, GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)
-											.addGroup(gl_panel.createSequentialGroup()
-												.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-													.addGroup(gl_panel.createSequentialGroup()
-														.addComponent(textField_2, GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-														.addGap(18))
-													.addGroup(gl_panel.createSequentialGroup()
-														.addComponent(lblBairro_1)
-														.addGap(159)))
-												.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-													.addComponent(lblLabel)
-													.addComponent(textField_3, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE))))
-										.addGap(18)))
+								.addGroup(gl_panel.createSequentialGroup()
+									.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+										.addGroup(gl_panel.createSequentialGroup()
+											.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+												.addComponent(lblNomeResponsavel)
+												.addComponent(NomeRespBusca, GroupLayout.PREFERRED_SIZE, 374, GroupLayout.PREFERRED_SIZE))
+											.addGap(8))
+										.addComponent(ruaBusca, GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
+										.addComponent(nomeBusca, GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
+										.addGroup(gl_panel.createSequentialGroup()
+											.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+												.addGroup(gl_panel.createSequentialGroup()
+													.addComponent(txtBairroBusca, GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+													.addGap(18))
+												.addGroup(gl_panel.createSequentialGroup()
+													.addComponent(lblBairro_1)
+													.addGap(159)))
+											.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+												.addComponent(lblLabel)
+												.addComponent(txtCidadeBusca, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE))))
+									.addGap(18))
 								.addGroup(gl_panel.createSequentialGroup()
 									.addComponent(lblRua_1)
+									.addPreferredGap(ComponentPlacement.RELATED))
+								.addGroup(gl_panel.createSequentialGroup()
+									.addComponent(lblNome_1, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)))
 							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
@@ -556,13 +560,13 @@ public class ViewCadastroCondominio extends JFrame {
 												.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
 													.addComponent(lblUf)
 													.addComponent(lblNumero_2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-													.addComponent(textField, 0, 0, Short.MAX_VALUE))
+													.addComponent(txtNumeroBusca, 0, 0, Short.MAX_VALUE))
 												.addGap(18)
 												.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
 													.addComponent(lblNewLcomplementoabel)
 													.addComponent(lblCep_1)
-													.addComponent(textField_4)
-													.addComponent(textField_1))
+													.addComponent(txtCepBusca)
+													.addComponent(txtComplementoBusca))
 												.addGap(10))
 											.addComponent(cpfBusca, GroupLayout.PREFERRED_SIZE, 212, GroupLayout.PREFERRED_SIZE))
 										.addGap(314))
@@ -599,8 +603,8 @@ public class ViewCadastroCondominio extends JFrame {
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(ruaBusca, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(txtComplementoBusca, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(txtNumeroBusca, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel.createSequentialGroup()
@@ -609,14 +613,14 @@ public class ViewCadastroCondominio extends JFrame {
 								.addComponent(lblLabel))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-								.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(textField_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+								.addComponent(txtBairroBusca, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(txtCidadeBusca, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 						.addGroup(gl_panel.createSequentialGroup()
 							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 								.addComponent(lblUf)
 								.addComponent(lblCep_1))
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textField_4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(txtCepBusca, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 					.addGap(18)
 					.addComponent(lblUnidades)
 					.addPreferredGap(ComponentPlacement.RELATED)
@@ -687,10 +691,17 @@ public class ViewCadastroCondominio extends JFrame {
 	
 	public Unidade cadastroUnidade() {
 		Unidade unidade = new Unidade()
-		.setNumero(txtnumeroUnidade.getText())
+		.setNumero(txtNumeroUnidade.getText())
 		.setCpf(txtCpfResponsavel.getText())
 		.setNomeResponsavel(txtNomeResponsavel.getText());
+		limpaUnidade();
 		return unidade;
+	}
+	
+	public void limpaUnidade() {
+		txtCpfResponsavel.setText("");
+		txtNomeResponsavel.setText("");
+		txtNumeroUnidade.setText("");	
 	}
 	
 	public Condominio buscaCondominio(Object object) {
